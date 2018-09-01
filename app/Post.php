@@ -13,6 +13,10 @@ class Post extends Model
         'title',
         'content'
     ];
+    const IS_DRAFT = 0;
+    const IS_PUBLIC = 1;
+    const IS_FEATURED = 0;
+    const IS_STANDART = 1;
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -113,7 +117,7 @@ class Post extends Model
      */
     public function setDraft()
     {
-        $this->status = 0;
+        $this->status = Post::IS_DRAFT;
         $this->save();
     }
     /**
@@ -121,7 +125,7 @@ class Post extends Model
      */
     public function setPublic()
     {
-        $this->status = 1;
+        $this->status = Post::IS_PUBLIC;
         $this->save();
     }
     /**
@@ -129,7 +133,7 @@ class Post extends Model
      */
     public function setFeatured()
     {
-        $this->is_featured = 1;
+        $this->is_featured = Post::IS_FEATURED;
         $this->save();
     }
     /**
@@ -137,7 +141,7 @@ class Post extends Model
      */
     public function setStandart()
     {
-        $this->is_featured = 0;
+        $this->is_featured = Post::IS_STANDART;
         $this->save();
     }
     /**
@@ -161,5 +165,15 @@ class Post extends Model
         }else{
             return $this->status = setPublic();
         }
+    }
+    /**
+     * Get image post
+     */
+    public function getImage()
+    {
+        if(null === $this->image){
+            return '/img/no-img.png';
+        }
+        return '/uploads/' . $this->image;
     }
 }
